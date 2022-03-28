@@ -13,11 +13,11 @@
         <h2>Agregar producto al carrito</h2>
     </div>
     <div class="container">
-        <% products.forEach((p)=>{ %>
-            <div class="row">
+            <div class="products row">
+                <% products.map((p)=>{ %>
                 <div class="col">
                     <div class="card">
-                        <img class="card-img-top" alt="imagen-comida" src=<%= p.photo %>>
+                        <img class="card-img-top img-fluid" alt="imagen-comida" src=<%= p.photo %>>
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= p.name %>
@@ -28,7 +28,7 @@
                             <p class="card-text">
                                 $ <%= p.price %>
                             </p>
-                            <button>Agregar al carrito</button>
+                            <button class="btn btn-primary" type="button" id="addToCart">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>

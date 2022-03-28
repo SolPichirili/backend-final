@@ -21,6 +21,13 @@ const getById = async (req, res) => {
     res.send({ data: productById });
 }
 
+const getByCategory = async (req, res) =>{
+    logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
+    const category = req.params.category;
+    const productsByCategory = await ProductDao.getById(category);
+    res.send({data: productsByCategory});
+}
+
 const save = async (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const newProduct = req.body;
@@ -46,6 +53,7 @@ const deleteById = async (req, res) => {
 module.exports = {
     getIndex,
     getById,
+    getByCategory,
     save,
     update,
     deleteById

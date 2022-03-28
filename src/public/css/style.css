@@ -1,3 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
 h1{
     margin-top: 1rem;
 }
@@ -27,10 +37,6 @@ button{
     margin-bottom: 5%;
 }
 
-img {
-    width: 10%;
-    height: 10%;
-}
 .error {
     background-color: red;
     height: 100%;
@@ -44,4 +50,9 @@ img {
 
 .login:hover{
     color: white;
+}
+
+.products{
+    display: grid;
+    grid-template-columns: repeat(2, 40fr);
 }
