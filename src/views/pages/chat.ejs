@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include('../partials/head.ejs' ); %>
+        <title>Chat de consulta</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Servicio de chat</h2>
+        <div>
+            <form id="chat">
+                <div class="mb-3">
+                    <label class="form-label">E-mail:</label>
+                    <input type="email" class="form-control" id="mail">
+                    <label class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="name">
+                    <label class="form-label">Apellido:</label>
+                    <input type="text" class="form-control" id="lastname">
+                    <div class="mb-3" id="savedMessage"></div>
+                    <div class="mb-3">
+                        <label class="form-label">Mensaje:</label>
+                        <input type="text" class="form-control" id="message">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary"><a href="/productos">Volver a comprar</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/js/chat.js"></script>
+</body>
+
+</html>
