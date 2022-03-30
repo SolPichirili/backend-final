@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include('../partials/head.ejs' ); %>
+        <title>Productos</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Productos</h1>
+        <div class="products row">
+            <div class="col">
+                <div class="card">
+                    <img class="card-img-top img-fluid" alt="imagen-comida" src=<%= product.photo %>>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= product.name %>
+                        </h5>
+                        <p class="card-text">
+                            <%= product.description %>
+                        </p>
+                        <p class="card-text">
+                            $ <%= product.price %>
+                        </p>
+                        <button class="btn btn-primary" type="button" id="addToCart">Agregar al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

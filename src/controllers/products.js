@@ -18,14 +18,20 @@ const getById = async (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const id = req.params.id;
     const productById = await ProductDao.getById(id);
-    res.send({ data: productById });
+    res.render(`../src/views/pages/productId.ejs`, {
+        email: req.user.email,
+        product: productById
+    });
 }
 
 const getByCategory = async (req, res) =>{
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const category = req.params.category;
-    const productsByCategory = await ProductDao.getById(category);
-    res.send({data: productsByCategory});
+    const productsByCategory = await ProductDao.getByCategory(category);
+    res.render(`../src/views/pages/index.ejs`, {
+        email: req.user.email,
+        products: productsByCategory
+    });
 }
 
 const save = async (req, res) => {

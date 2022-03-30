@@ -1,11 +1,17 @@
-const LocalStrategy = require('passport-local').Strategy;
+const Strategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../../models/User');
 const logger = require('../../utils/winston');
 const { isValidPassword, createHash } = require('../../utils/bCrypt');
 const { send } = require('../../utils/nodemailer');
 
-const loginStrategy = new LocalStrategy((username, password, done) => {
-    User.findOne({ email: username }, (err, user) => {
+const options = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: 'secret'
+}
+
+const loginStrategy = new Strategy(options, (jwt_payload, done) => {
+    User.findOne({ id: jwt_payload }, (err, user) => {
         if (err) {
             return done(err);
         }
@@ -24,7 +30,7 @@ const loginStrategy = new LocalStrategy((username, password, done) => {
     })
 });
 
-const registerStrategy = new LocalStrategy({ passReqToCallback: true },
+const registerStrategy = new Strategy(options, { passReqToCallback: true },
     (req, username, password, done) => {
         User.findOne({ email: username }, (err, user) => {
             if (err) {

@@ -37,6 +37,16 @@ class ContainerMongo {
         }
     }
 
+    async getByCategory(category){
+        try{
+            const documents = await this.model.find({category});
+            return documents;
+        }
+        catch(error){
+            console.error(`Error: ${error}`);
+        }
+    }
+
     async save(element) {
         try {
             const document = await this.model.create(element);

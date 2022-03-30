@@ -9,7 +9,7 @@ productsRouter.get('/', authMiddleware, productsController.getIndex);
 
 productsRouter.get('/:id', productsController.getById);
 
-productsRouter.get('/:category', productsController.getByCategory);
+productsRouter.get('/categorias/:category', productsController.getByCategory);
 
 productsRouter.post('/', isAdmin, productsController.save);
 

@@ -28,6 +28,18 @@ class ContainerMem {
         }
     }
 
+    async getByCategory(category){
+        try{
+            const list = this.array;
+            const elementList = list.find(e=> e.category === category);
+
+            return elementList;
+        }
+        catch(error){
+            console.error(`Error: ${error}`);
+        }
+    }
+
     async save(element) {
         try {
             const list = this.array;

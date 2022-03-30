@@ -17,7 +17,7 @@ class ContainerFs {
 
     async getById(id) {
         try {
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8')
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
             const list = JSON.parse(content);
             const elementList = list.find(e => e._id === id);
 
@@ -28,7 +28,20 @@ class ContainerFs {
             return elementList;
 
         } catch (error) {
-            console.error('Error: ', error);
+            console.error(`Error: ${error}`);
+        }
+    }
+
+    async getByCategory(category){
+        try{
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const elementList = list.filter(e => e.category === category);
+
+            return elementList;
+        }
+        catch(error){
+            console.error(`Error: ${error}`);
         }
     }
 

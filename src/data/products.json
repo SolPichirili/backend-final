@@ -1,32 +1,35 @@
 [
     {
-      "nombre": "Saladitos x 12",
-      "descripcion": "Canapes varios.",
-      "codigo": "254",
-      "foto": "https://i.ytimg.com/vi/WIPg7_st9qo/maxresdefault.jpg",
-      "precio": "$1000",
+      "name": "Saladitos x 12",
+      "description": "Canapes varios.",
+      "code": "254",
+      "photo": "https://i.ytimg.com/vi/WIPg7_st9qo/maxresdefault.jpg",
+      "price": "$1000",
       "stock": "200",
       "_id": "1",
-      "timestamp": 1635793686799
+      "timestamp": 1635793686799,
+      "category": "salado"
     },
     {
-      "nombre": "Sanguches de miga x 16",
-      "descripcion": "Sanguches de dos variedades a elección.",
-      "codigo": "306",
-      "foto": "https://placeralplato.com/files/2015/05/Receta-de-sndwiches-de-miga.jpg",
-      "precio": "$1200",
+      "name": "Sanguches de miga x 16",
+      "description": "Sanguches de dos variedades a elección.",
+      "code": "306",
+      "photo": "https://placeralplato.com/files/2015/05/Receta-de-sndwiches-de-miga.jpg",
+      "price": "$1200",
       "stock": "1000",
       "_id": "2",
-      "timestamp": 1635793706080
+      "timestamp": 1635793706080,
+      "category": "salado"
     },
     {
-      "nombre": "Chips x 12",
-      "descripcion": "Sanguchitos tipo pebete de gustos varios.",
-      "codigo": "120",
-      "foto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwHORhFLEEubrG5dDBdx2LKstT1FhDzcTmg&usqp=CAU",
-      "precio": "$1300",
+      "name": "Chips x 12",
+      "description": "Sanguchitos tipo pebete de gustos varios.",
+      "code": "120",
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwHORhFLEEubrG5dDBdx2LKstT1FhDzcTmg&usqp=CAU",
+      "price": "$1300",
       "stock": "500",
       "_id": "3",
-      "timestamp": 1635793722263
+      "timestamp": 1635793722263,
+      "category": "dulce"
     }
   ]

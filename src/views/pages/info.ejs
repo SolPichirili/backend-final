@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include('../partials/head.ejs' ); %>
+        <title>Info de la web</title>
+</head>
+
+<body>
+    <h1>Info</h1>
+
+    <div class="container">
+        <p>
+            <%= info.ArgsDeEntrada %>
+        </p>
+        <p>
+            <%= info.NombreDeLaPlataforma %>
+        </p>
+        <p>
+            <%= info.VersionDeNode %>
+        </p>
+        <p>
+            <%= info.PathDeEjecucion %>
+        </p>
+        <p>
+            <%= info.ProcessId %>
+        </p>
+        <p>
+            <%= info.CarpetaDelProyecto %>
+        </p>
+    </div>
+
+</body>
+
+</html>
