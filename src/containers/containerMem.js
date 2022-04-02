@@ -3,6 +3,21 @@ class ContainerMem {
         this.array = [];
     }
 
+    async findUser(email){
+        try{
+            const list = this.array;
+            const elementList = list.find(e => e.email === email);
+
+            if (!elementList) {
+                return { error: 'No encontrado' };
+            }
+            return elementList;
+        }
+        catch(error){
+            console.error(`Error: ${error}`);
+        }
+    }
+
     async getAll() {
         try {
             const list = this.array;

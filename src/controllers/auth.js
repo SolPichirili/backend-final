@@ -1,20 +1,63 @@
-const getLogin = (req, res) => {
-    if (req.isAuthenticated()) {
-        res.redirect('/productos')
-    } else {
-        res.render(`../src/views/pages/login.ejs`)
-    }
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const logger = require('../utils/winston');
+
+const signUp = [
+    passport.authenticate('signup', { session: false }),
+        async (req, res, next) => {
+            res.redirect('/productos');
+        }
+];
+
+const login = async (req, res, next) => {
+    passport.authenticate(
+        'login', 
+        async (err, user, info) => {
+        try {
+
+            if (err || !user) {
+                logger.error(err);
+                res.render('../src/views/pages/failLogin.ejs');
+                return next(err)
+            }
+
+            req.login(user,
+                { session: false },
+                async (error) => {
+                    if (error) {
+                        return next(error);
+                    }
+
+                    const body = { _id: user._id, email: user.email };
+                    jwt.sign({ user: body }, 'secret');
+                }
+            )
+
+            return res.redirect('/productos');
+        }
+        catch (error) {
+            return next(error);
+        }
+    })(req, res, next);
 }
 
-const failLogin = (req, res) => {
-    res.render('../src/views/pages/failLogin.ejs');
+const getProfile = () => {
+    passport.authenticate('jwt', {
+        session: false
+    }),
+        (req, res, next) => {
+            res.json({user: req.user});
+        }
+}
+
+const getLogin = (req, res) => {
+    res.render(`../src/views/pages/login.ejs`)
 }
 
 const logOut = (req, res) => {
-    const email = req.user.email;
     req.session.destroy(err => {
         if (!err) {
-            res.render('../src/views/pages/logOut.ejs', { email });
+            res.render('../src/views/pages/logOut.ejs');
         } else {
             res.redirect('../src/views/pages/login.ejs');
         }
@@ -34,8 +77,10 @@ const redirectLogin = (req, res) => {
 }
 
 module.exports = {
+    signUp,
+    login,
+    getProfile,
     getLogin,
-    failLogin,
     logOut,
     getRegister,
     failRegister,

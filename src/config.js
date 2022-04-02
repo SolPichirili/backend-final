@@ -15,7 +15,9 @@ const options = {
     file: {
         productsPath: __dirname + '/data/products.json',
         cartPath: __dirname + '/data/cart.json',
-        chatPath: __dirname + '/data/messages.json'
+        chatPath: __dirname + '/data/messages.json',
+        usersPath: __dirname + '/data/users.json',
+        ordersPath: __dirname + '/data/orders.json'
     }
 }
 

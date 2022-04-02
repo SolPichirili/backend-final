@@ -9,7 +9,6 @@ const ProductDao = factory.getPersistenceMethod(getPersistence()).productsDao;
 const getIndex = async (req, res) => {
     const products = await ProductDao.getAll();
     res.render(`../src/views/pages/index.ejs`, {
-        email: req.user.email,
         products: products
     })
 }
@@ -18,8 +17,12 @@ const getById = async (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const id = req.params.id;
     const productById = await ProductDao.getById(id);
+
+    if(!productById){
+        res.render(`../src/views/pages/productError.ejs`);
+    }
+
     res.render(`../src/views/pages/productId.ejs`, {
-        email: req.user.email,
         product: productById
     });
 }

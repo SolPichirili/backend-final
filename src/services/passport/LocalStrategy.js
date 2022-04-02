@@ -1,77 +1,95 @@
-const Strategy = require('passport-jwt').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const User = require('../../models/User');
 const logger = require('../../utils/winston');
 const { isValidPassword, createHash } = require('../../utils/bCrypt');
-const { send } = require('../../utils/nodemailer');
+const { sendMail } = require('../../utils/nodemailer');
+const { getUser, createUser } = require('../../controllers/users');
 
 const options = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'secret'
+    secretOrKey: 'secret',
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 }
 
-const loginStrategy = new Strategy(options, (jwt_payload, done) => {
-    User.findOne({ id: jwt_payload }, (err, user) => {
-        if (err) {
-            return done(err);
-        }
-
-        if (!user) {
-            logger.error('User not found');
-            return done(null, false);
-        }
-
-        if (!isValidPassword(user, password)) {
-            logger.error('Invalid Password');
-            return done(null, false);
-        }
-
-        return done(null, user)
-    })
-});
-
-const registerStrategy = new Strategy(options, { passReqToCallback: true },
-    (req, username, password, done) => {
-        User.findOne({ email: username }, (err, user) => {
-            if (err) {
-                logger.error(`Error ${err}`);
-                return done(err);
-            }
-
-            if (user) {
-                logger.error('User already exists');
-                return done(null, false);
-            }
+const registerStrategy = new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+},
+    async (req, res, email, password, done) => {
+        try {
+            const { name, address, age, tel } = req.body;
 
             const newUser = {
-                username: username,
-                password: createHash(password),
-                repeatPassword: createHash(password),
-                email: req.body.username,
-                name: req.body.name,
-                address: req.body.address,
-                age: req.body.age,
-                tel: req.body.tel,
-                img: req.body.photo
+                email,
+                password,
+                name,
+                address,
+                age,
+                tel
             }
 
-            if (newUser.tel.includes('+549') || newUser.password === newUser.repeatPassword ) {
-                User.create(newUser, (err, userCreated) => {
-                    if (err) {
-                        logger.error(`Error ${err}`);
-                        return done(err);
-                    }
+            if (req.body.repeatPassword === password) {
+                const hash = createHash(password);
+                newUser.password = hash;
 
-                    logger.info('Successful registration');
-                    send(`Nuevo registro de ${userCreated}`);
-                    return done(null, userCreated);
-                });
-            } else {
-                logger.error('Error with Phone');
+                const userCreated = await createUser(newUser);
+
+                if(userCreated){
+                    res.redirect('/failLogin')
+                }
+
+                await sendMail(userCreated);
+
+                logger.info('Registration succesfully');
+
+                return done(null, userCreated);
+            }
+        }
+        catch (error) {
+            return done(error);
+        }
+    }
+);
+
+const loginStrategy = new LocalStrategy(
+    {
+        usernameField: 'email',
+        passwordField: 'password'
+    },
+    async (email, password, done) => {
+        try {
+            const user = await getUser(email);
+
+            if (!user) {
+                logger.error('User not found');
                 return done(null, false);
             }
-        })
-    });
+
+            if (!isValidPassword(user, password)) {
+                logger.error('Invalid Password');
+                return done(null, false);
+            }
+
+            logger.info('Login succesfully')
+            return done(null, user);
+        }
+        catch (error) {
+            return done(error);
+        }
+    }
+);
+
+const jwtStrategy = new JwtStrategy(options,
+    async (token, done) => {
+        try {
+            return done(null, token.user);
+        }
+        catch (error) {
+            done(error);
+        }
+    }
+);
 
 const serializeUser = (user, cb) => {
     cb(null, user);
@@ -81,10 +99,11 @@ const deserializeUser = (obj, cb) => {
     cb(null, obj);
 }
 
-
 module.exports = {
     loginStrategy,
     registerStrategy,
+    jwtStrategy,
     serializeUser,
     deserializeUser
 }
+

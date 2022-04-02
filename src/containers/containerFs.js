@@ -5,6 +5,23 @@ class ContainerFs {
         this.file = file;
     }
 
+    async findUser(email){
+        try{
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const elementList = list.find(e => e.email === email);
+
+            if (!elementList) {
+                return { error: 'No encontrado' };
+            }
+
+            return elementList;
+        }
+        catch(error){
+            console.error(`Error: ${error}`);
+        }
+    }
+
     async getAll() {
         try {
             const content = await fs.promises.readFile(`${this.file}`, 'utf-8');

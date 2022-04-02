@@ -1,2 +1,11 @@
 
+{"level":"error","message":"User already exists"}
+{"level":"error","message":"User already exists"}
+{"level":"error","message":"User already exists"}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 2-20020a056870124200b000dd9ac0d61esm1850425oao.24 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials e4-20020a056870920400b000e1bdf90ba5sm1309925oaf.22 - gsmtp","responseCode":535}
+{"code":"EAUTH","command":"AUTH PLAIN","level":"error","response":"535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials a17-20020a4ae931000000b0032933be7230sm817362ooe.4 - gsmtp","responseCode":535}
 {"level":"error","message":"Invalid Password"}
+{"level":"error","message":null}
+{"level":"error","message":"User not found"}
+{"level":"error","message":null}

@@ -1,11 +1,10 @@
 const express = require('express');
-const {authMiddleware} = require('../middlewares/auth');
 const productsController = require('../controllers/products');
 const { isAdmin } = require('../middlewares/admin');
 
 const productsRouter = express.Router();
 
-productsRouter.get('/', authMiddleware, productsController.getIndex);
+productsRouter.get('/', productsController.getIndex);
 
 productsRouter.get('/:id', productsController.getById);
 

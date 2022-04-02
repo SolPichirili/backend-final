@@ -13,6 +13,21 @@ class ContainerMongo {
         }
     }
 
+    async findUser(email){
+        try{
+            const documents = await this.model.findOne({email});
+
+            if (documents.length === 0){
+                return false
+            }
+
+            return documents;
+        }
+        catch(error){
+            console.error(`Error: ${error}`);
+        }
+    }
+
     async getAll() {
         try {
             const documents = await this.model.find({});

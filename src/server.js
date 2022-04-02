@@ -19,7 +19,6 @@ server.set('view engine', 'ejs');
 server.use(sessionMongo);
 
 server.use(passport.initialize());
-server.use(passport.session())
 
 server.use(router);
 

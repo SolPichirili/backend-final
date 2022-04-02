@@ -1,9 +1,11 @@
 const passport = require('passport');
-const {loginStrategy, registerStrategy, serializeUser, deserializeUser} = require('../passport/LocalStrategy');
+const {loginStrategy, registerStrategy, jwtStrategy, serializeUser, deserializeUser} = require('../passport/LocalStrategy');
 
-passport.use('jwt', loginStrategy);
+passport.use('login', loginStrategy);
 
-passport.use('register', registerStrategy);
+passport.use('signup', registerStrategy);
+
+passport.use('jwt', jwtStrategy);
 
 passport.serializeUser(serializeUser);
 
