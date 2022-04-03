@@ -1,21 +1,24 @@
-const logger = require('../utils/winston');
 const PersistenceFactory = require('../daos/index');
 const { getPersistence } = require('../utils/getPersistence');
+const logger = require('../utils/winston');
 
 const factory = PersistenceFactory.getInstance();
 
 const CartDaos = factory.getPersistenceMethod(getPersistence()).cartDao;
+const ProductDaos = factory.getPersistenceMethod(getPersistence()).productsDao;
 
-const getAll = async (req, res)=>{
-    const carts = await CartDaos.getAll();
-    res.send({data: carts});
+const getCart = async(req, res)=>{
+    await CartDaos.save();
+    res.render('../src/views/pages/cart.ejs');
 }
 
-const getNewId = async (req, res) => {
-    logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
-    const cart = req.body;
-    const cartId = await CartDaos.getNewId(cart);
-    res.send({ data: cartId });
+const createCart = async (req, res) => {
+    const productId = req.body;
+    const product = await ProductDaos.getById(productId.prodId);
+    const cart = await CartDaos.save(product);
+    res.render('../src/views/pages/cart.ejs', {
+        cart: cart
+    });
 }
 
 const deleteById = async (req, res) => {
@@ -29,11 +32,13 @@ const getById = async (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const id = req.params.id;
     const cart = await CartDaos.getById(id);
-    if(!cart){
-        res.send({data: `El carrito con ID ${id} no existe`})
+    if (!cart) {
+        res.send({ data: `El carrito con ID ${id} no existe` })
     }
     const { productos } = cart;
-    res.send({ data: productos });
+    res.render('../src/views/pages/cart.ejs', {
+        products: productos
+    });
 }
 
 const addProductById = async (req, res) => {
@@ -53,8 +58,8 @@ const deleteProductById = async (req, res) => {
 }
 
 module.exports = {
-    getAll,
-    getNewId,
+    getCart,
+    createCart,
     deleteById,
     getById,
     addProductById,

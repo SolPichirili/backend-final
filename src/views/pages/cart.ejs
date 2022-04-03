@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include('../partials/head.ejs' ); %>
+        <title>Carrito</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Carrito</h1>
+
+        <form action="/carrito" method="post">
+            <label>Id del producto:</label>
+            <input type="text" name="prodId">
+            <label></label>
+            <div>
+                <button class="btn btn-primary" type="submit">Crear carrito</button>
+            </div>
+        </form>
+
+        <div>
+
+        </div>
+
+        <div>
+            <button class="btn btn-primary" id="btnFinish">Finalizar compra</button>
+        </div>
+    </div>
+    <script src="/js/index.js"></script>
+</body>
+
+</html>

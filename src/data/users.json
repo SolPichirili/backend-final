@@ -1,0 +1,22 @@
+[
+  {
+    "email": "sol.pichirili@gmail.com",
+    "password": "$2b$10$N23K4xPtpHBcnpaE..o5eOMe49QNM.p3R8DJxj37QRSQXwwcZe1ua",
+    "name": "Sol Pichirili",
+    "address": "Holmberg 1290",
+    "age": "29",
+    "tel": "1168226456",
+    "_id": "1",
+    "timestamp": 1648910851086
+  },
+  {
+    "email": "sp@g.com",
+    "password": "$2b$10$LjwT9Z3LKwBXK83i.zWA5.uU153zkcjpTNxxV0ojjgXzgEKBrr.wu",
+    "name": "Sol Pichirili",
+    "address": "Holmberg 1290",
+    "age": "29",
+    "tel": "1168226456",
+    "_id": "2",
+    "timestamp": 1648911246572
+  }
+]

@@ -31,8 +31,12 @@ const getByCategory = async (req, res) =>{
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const category = req.params.category;
     const productsByCategory = await ProductDao.getByCategory(category);
+
+    if(!productsByCategory){
+        res.render(`../src/views/pages/productError.ejs`);
+    }
+
     res.render(`../src/views/pages/index.ejs`, {
-        email: req.user.email,
         products: productsByCategory
     });
 }

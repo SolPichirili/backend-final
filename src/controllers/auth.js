@@ -5,6 +5,7 @@ const logger = require('../utils/winston');
 const signUp = [
     passport.authenticate('signup', { session: false }),
         async (req, res, next) => {
+            logger.info(`PATH: ${req.path}, METHOD: ${req.method}, process ok`);
             res.redirect('/productos');
         }
 ];
@@ -16,26 +17,28 @@ const login = async (req, res, next) => {
         try {
 
             if (err || !user) {
-                logger.error(err);
+                logger.error(`Error de login: ${err}`);
                 res.render('../src/views/pages/failLogin.ejs');
-                return next(err)
+                return next(err);
             }
 
             req.login(user,
                 { session: false },
                 async (error) => {
                     if (error) {
+                        logger.error(`Error de login: ${err}`);
                         return next(error);
                     }
 
                     const body = { _id: user._id, email: user.email };
-                    jwt.sign({ user: body }, 'secret');
+                    jwt.sign({ user: body }, process.env.SECRET_OR_KEY);
                 }
-            )
+            );
 
             return res.redirect('/productos');
         }
         catch (error) {
+            logger.error(`Error de login: ${err}`);
             return next(error);
         }
     })(req, res, next);
@@ -59,6 +62,7 @@ const logOut = (req, res) => {
         if (!err) {
             res.render('../src/views/pages/logOut.ejs');
         } else {
+            logger.error(`Error log out: ${err}`);
             res.redirect('../src/views/pages/login.ejs');
         }
     });
@@ -72,10 +76,6 @@ const failRegister = (req, res) => {
     res.render('../src/views/pages/failRegister.ejs');
 }
 
-const redirectLogin = (req, res) => {
-    res.redirect('/')
-}
-
 module.exports = {
     signUp,
     login,
@@ -83,6 +83,5 @@ module.exports = {
     getLogin,
     logOut,
     getRegister,
-    failRegister,
-    redirectLogin
+    failRegister
 }

@@ -1,70 +1,14 @@
 const fs = require('fs');
+const logger = require('../utils/winston');
 
 class ContainerFs {
     constructor(file) {
         this.file = file;
     }
 
-    async findUser(email){
-        try{
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
-            const list = JSON.parse(content);
-            const elementList = list.find(e => e.email === email);
-
-            if (!elementList) {
-                return { error: 'No encontrado' };
-            }
-
-            return elementList;
-        }
-        catch(error){
-            console.error(`Error: ${error}`);
-        }
-    }
-
-    async getAll() {
-        try {
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
-            const list = JSON.parse(content);
-            return list;
-        } catch (error) {
-            console.error('Error: ', error);
-        }
-    }
-
-    async getById(id) {
-        try {
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
-            const list = JSON.parse(content);
-            const elementList = list.find(e => e._id === id);
-
-            if (!elementList) {
-                return { error: 'No encontrado' };
-            }
-
-            return elementList;
-
-        } catch (error) {
-            console.error(`Error: ${error}`);
-        }
-    }
-
-    async getByCategory(category){
-        try{
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
-            const list = JSON.parse(content);
-            const elementList = list.filter(e => e.category === category);
-
-            return elementList;
-        }
-        catch(error){
-            console.error(`Error: ${error}`);
-        }
-    }
-
     async save(element) {
         try {
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8')
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
 
             let elements = [];
 
@@ -84,7 +28,64 @@ class ContainerFs {
             await fs.promises.writeFile(`${this.file}`, listString);
             return elements;
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (save): ${error}`);
+        }
+    }
+
+    async findUser(email) {
+        try {
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const elementList = list.find(e => e.email === email);
+
+            if (!elementList) {
+                return { error: 'No encontrado' };
+            }
+
+            return elementList;
+        }
+        catch (error) {
+            logger.error(`Error de container (findUser): ${error}`);
+        }
+    }
+
+    async getAll() {
+        try {
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            return list;
+        } catch (error) {
+            logger.error(`Error de container (getAll): ${error}`);
+        }
+    }
+
+    async getById(id) {
+        try {
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const elementList = list.find(e => e._id === id);
+
+            if (!elementList) {
+                return { error: 'No encontrado' };
+            }
+
+            return elementList;
+
+        } catch (error) {
+            logger.error(`Error de container (getById): ${error}`);
+        }
+    }
+
+    async getByCategory(category) {
+        try {
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const elementList = list.filter(e => e.category === category);
+
+            return elementList;
+        }
+        catch (error) {
+            logger.error(`Error de container (getByCategory): ${error}`);
         }
     }
 
@@ -109,6 +110,7 @@ class ContainerFs {
             const listString = JSON.stringify(elements, null, 2);
             await fs.promises.writeFile(`${this.file}`, listString);
             return element._id;
+
         } catch (error) {
             console.error('Error: ', error);
         }
@@ -137,26 +139,32 @@ class ContainerFs {
 
             return updatedList;
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (update): ${error}`);
         }
     }
 
     async addProductById(cartId, products) {
-        const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
-        const list = JSON.parse(content);
-        const element = list.find(e => e._id === cartId);
+        try {
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const element = list.find(e => e._id === cartId);
 
-        if (!element) {
-            return `El carrito no existe`;
+            if (!element) {
+                return { error: 'No encontrado' }
+            }
+
+            if (!element.productos) {
+                element.productos = [];
+            }
+
+            element.productos.push(products);
+
+            return await this.update(cartId, element);
+        }
+        catch (error) {
+            logger.error(`Error de container (addProductById): ${error}`);
         }
 
-        if (!element.productos) {
-            element.productos = [];
-        }
-
-        element.productos.push(products);
-
-        return await this.update(cartId, element);
     }
 
     async deleteById(id) {
@@ -177,7 +185,7 @@ class ContainerFs {
             return list;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (deleteById): ${error}`);
         }
     }
 
@@ -196,7 +204,7 @@ class ContainerFs {
 
             return list;
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (deleteProductById): ${error}`);
         }
     }
 }

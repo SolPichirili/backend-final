@@ -1,58 +1,8 @@
+const logger = require('../utils/winston');
+
 class ContainerMem {
     constructor() {
         this.array = [];
-    }
-
-    async findUser(email){
-        try{
-            const list = this.array;
-            const elementList = list.find(e => e.email === email);
-
-            if (!elementList) {
-                return { error: 'No encontrado' };
-            }
-            return elementList;
-        }
-        catch(error){
-            console.error(`Error: ${error}`);
-        }
-    }
-
-    async getAll() {
-        try {
-            const list = this.array;
-            return list;
-
-        } catch (error) {
-            console.error('Error: ', error);
-        }
-    }
-
-    async getById(id) {
-        try {
-            const list = this.array;
-            const elementList = list.find(e => e._id === id);
-
-            if (!elementList) {
-                return { error: 'No encontrado' };
-            }
-            return elementList;
-
-        } catch (error) {
-            console.error('Error: ', error);
-        }
-    }
-
-    async getByCategory(category){
-        try{
-            const list = this.array;
-            const elementList = list.find(e=> e.category === category);
-
-            return elementList;
-        }
-        catch(error){
-            console.error(`Error: ${error}`);
-        }
     }
 
     async save(element) {
@@ -74,7 +24,59 @@ class ContainerMem {
             return elements;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (save): ${error}`);
+        }
+    }
+
+    async findUser(email){
+        try{
+            const list = this.array;
+            const elementList = list.find(e => e.email === email);
+
+            if (!elementList) {
+                return { error: 'No encontrado' };
+            }
+            return elementList;
+        }
+        catch(error){
+            logger.error(`Error de container (findUser): ${error}`);
+        }
+    }
+
+    async getAll() {
+        try {
+            const list = this.array;
+            return list;
+
+        } catch (error) {
+            logger.error(`Error de container (getAll): ${error}`);
+        }
+    }
+
+    async getById(id) {
+        try {
+            const list = this.array;
+            const elementList = list.find(e => e._id === id);
+
+            if (!elementList) {
+                return { error: 'No encontrado' };
+            }
+            return elementList;
+
+        } catch (error) {
+            logger.error(`Error de container (getById): ${error}`);
+        }
+    }
+
+    async getByCategory(category){
+        try{
+            const list = this.array;
+            const elementList = list.find(e=> e.category === category);
+
+            return elementList;
+        }
+        catch(error){
+            logger.error(`Error de container (getByCategory): ${error}`);
         }
     }
 
@@ -120,25 +122,30 @@ class ContainerMem {
             return updatedList;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (update): ${error}`);
         }
     }
 
     async addProductById(cartId, products) {
-        const list = this.array;
-        const element = list.find(e => e._id === cartId);
-
-        if (!element) {
-            return `El carrito no existe`;
-        };
-
-        if (!element.productos) {
-            element.productos = [];
-        };
-
-        element.productos.push(products);
-        return element;
-    };
+        try{
+            const list = this.array;
+            const element = list.find(e => e._id === cartId);
+    
+            if (!element) {
+                return ({error: 'El carrito no existe'});
+            };
+    
+            if (!element.productos) {
+                element.productos = [];
+            };
+    
+            element.productos.push(products);
+            return element;
+        }
+        catch(error){
+            logger.error(`Error de contenedor (addProductById): ${error}`);
+        }
+    }
 
     async deleteById(id) {
         try {
@@ -154,7 +161,7 @@ class ContainerMem {
             return list;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de contenedor (deleteById): ${error}`);
         }
     }
 
@@ -169,7 +176,7 @@ class ContainerMem {
             return list;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de contenedor (deleteProductById): ${error}`);
         }
     }
 }

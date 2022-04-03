@@ -3,15 +3,15 @@ const cartController = require('../controllers/cart');
 
 const cartRouter = express.Router();
 
-cartRouter.get('/', cartController.getAll);
+cartRouter.get('/', cartController.getCart);
 
-cartRouter.post('/', cartController.getNewId);
+cartRouter.get('/:id', cartController.getById);
 
-cartRouter.delete('/:id', cartController.deleteById);
-
-cartRouter.get('/:id/productos', cartController.getById);
+cartRouter.post('/', cartController.getCart);
 
 cartRouter.post('/:id/productos', cartController.addProductById);
+
+cartRouter.delete('/:id', cartController.deleteById);
 
 cartRouter.delete('/:id/productos/:id_prod', cartController.deleteProductById);
 

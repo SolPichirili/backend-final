@@ -1,13 +1,13 @@
-const LocalStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const logger = require('../../utils/winston');
-const { isValidPassword, createHash } = require('../../utils/bCrypt');
+const LocalStrategy = require('passport-local').Strategy;
 const { sendMail } = require('../../utils/nodemailer');
+const logger = require('../../utils/winston');
+const JwtStrategy = require('passport-jwt').Strategy;
+const { isValidPassword, createHash } = require('../../utils/bCrypt');
 const { getUser, createUser } = require('../../controllers/users');
 
 const options = {
-    secretOrKey: 'secret',
+    secretOrKey: process.env.SECRET_OR_KEY,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 }
 
@@ -16,7 +16,7 @@ const registerStrategy = new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 },
-    async (req, res, email, password, done) => {
+    async (req, email, password, done) => {
         try {
             const { name, address, age, tel } = req.body;
 
@@ -28,26 +28,20 @@ const registerStrategy = new LocalStrategy({
                 age,
                 tel
             }
-
-            if (req.body.repeatPassword === password) {
+            
                 const hash = createHash(password);
                 newUser.password = hash;
 
                 const userCreated = await createUser(newUser);
-
-                if(userCreated){
-                    res.redirect('/failLogin')
-                }
 
                 await sendMail(userCreated);
 
                 logger.info('Registration succesfully');
 
                 return done(null, userCreated);
-            }
         }
         catch (error) {
-            return done(error);
+           return done(error);
         }
     }
 );
@@ -86,7 +80,7 @@ const jwtStrategy = new JwtStrategy(options,
             return done(null, token.user);
         }
         catch (error) {
-            done(error);
+            return done(error);
         }
     }
 );

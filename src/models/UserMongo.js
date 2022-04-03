@@ -9,4 +9,4 @@ const UserMongo = new Schema({
     tel: { type: String }
 });
 
-module.exports = model('users', UserMongo);
+module.exports = model('usuarios', UserMongo);

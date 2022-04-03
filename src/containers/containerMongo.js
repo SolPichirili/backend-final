@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const options = require('../config');
+const logger = require('../utils/winston');
 
 class ContainerMongo {
     constructor(model) {
@@ -10,6 +11,16 @@ class ContainerMongo {
     async init() {
         if (!this.connection) {
             this.connection = await mongoose.connect(options.mongodb.url, options.mongodb.options);
+        }
+    }
+
+    async save(element) {
+        try {
+            const document = await this.model.create(element);
+            return document;
+
+        } catch (error) {
+            logger.error(`Error de container (save): ${error}`);
         }
     }
 
@@ -24,7 +35,7 @@ class ContainerMongo {
             return documents;
         }
         catch(error){
-            console.error(`Error: ${error}`);
+            logger.error(`Error de container (findUser): ${error}`);
         }
     }
 
@@ -34,7 +45,7 @@ class ContainerMongo {
             return documents;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (getAll): ${error}`);
         }
     }
 
@@ -48,7 +59,7 @@ class ContainerMongo {
             return documents[0];
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (getById): ${error}`);
         }
     }
 
@@ -58,17 +69,7 @@ class ContainerMongo {
             return documents;
         }
         catch(error){
-            console.error(`Error: ${error}`);
-        }
-    }
-
-    async save(element) {
-        try {
-            const document = await this.model.create(element);
-            return document;
-
-        } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (getByCategory): ${error}`);
         }
     }
 
@@ -94,26 +95,31 @@ class ContainerMongo {
             return updatedElement;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (update): ${error}`);
         }
     }
 
     async addProductById(cartId, products) {
-        const document = await this.getById(cartId);
+        try{
+            const document = await this.getById(cartId);
 
-        if (!document){
-            return {error: 'El carrito no existe.'}
+            if (!document){
+                return {error: 'El carrito no existe.'}
+            }
+    
+            let elements = document.productos;
+    
+            products.map(e=> elements.push(e))
+    
+            await this.update(cartId, {productos: elements});
+    
+            return elements;
+        }
+        catch(error){
+            logger.error(`Error de container (addProductById): ${error}`);
         }
 
-        let elements = document.productos;
-
-        products.map(e=> elements.push(e))
-
-        await this.update(cartId, {productos: elements});
-
-        return elements;
     }
-
 
     async deleteById(id) {
         try {
@@ -121,10 +127,11 @@ class ContainerMongo {
             if (!document) {
                 return { error: 'No encontrado' };
             };
+
             return document;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (deleteById): ${error}`);
         }
     }
 
@@ -133,7 +140,7 @@ class ContainerMongo {
             const document = await this.getById(cartId);
 
             if (!document) {
-                return `El carrito no existe`;
+                return ({error: 'El carrito no existe'});
             };
 
             const elements = document.productos;
@@ -145,7 +152,7 @@ class ContainerMongo {
             return document;
 
         } catch (error) {
-            console.error('Error: ', error);
+            logger.error(`Error de container (deleteProductById): ${error}`);
         }
     }
 }

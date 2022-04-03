@@ -8,36 +8,38 @@
 
 <body>
     <div class="container">
-        <h1>Bienvenide<button class="btn btn-primary"
-                    onclick="location.href='/logout'">Desloguear</button></h1>
-        <h2>Agregar producto al carrito</h2>
+        <h1>Bienvenide<button class="btn btn-primary" onclick="location.href='/logout'">Desloguear</button></h1>
+        <h2>Catalogo</h2>
     </div>
     <div class="container">
             <div class="products row">
                 <% products.map((p)=>{ %>
-                <div class="col">
-                    <div class="card">
-                        <img class="card-img-top img-fluid" alt="imagen-comida" src=<%= p.photo %>>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= p.name %>
-                            </h5>
-                            <p class="card-text">
-                                <%= p.description %>
-                            </p>
-                            <p class="card-text">
-                                $ <%= p.price %>
-                            </p>
-                            <button class="btn btn-primary" type="button" id="addToCart">Agregar al carrito</button>
+                    <div class="col">
+                        <div class="card">
+                            <img class="card-img-top img-fluid" alt="imagen-comida" src=<%=p.photo %>>
+                            <div class="card-body">
+                                <h5 class="card-title" id="prodName">
+                                    <%= p.name %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= p.description %>
+                                </p>
+                                <p class="card-text" id="prodPrice">
+                                    $ <%= p.price %>
+                                </p>
+
+                                <p class="card-text" id="prodPrice">
+                                    ID de compra: <%= p._id %>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <%}); %>
+                    <%}); %>
             </div>
     </div>
 
-    <div class="container" id="listadoCarrito">
-        <button class="btn btn-primary" id="btnFinalizarCompra">Finalizar compra</button>
+    <div class="container">
+        <form action="/productos" method="post" id="purchaseForm"><button class="btn btn-primary">Ir a comprar</button></form>
         <button class="btn btn-primary"><a href="/chat" class="login">Ir al chat</a></button>
     </div>
 
