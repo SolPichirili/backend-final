@@ -7,4 +7,6 @@ chatRouter.get('/', chatController.showChat);
 
 chatRouter.get('/:email', chatController.getByEmail);
 
+chatRouter.post('/', chatController.save);
+
 module.exports = chatRouter;

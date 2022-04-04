@@ -13,21 +13,21 @@
             <form id="chat">
                 <div class="mb-3">
                     <label class="form-label">E-mail:</label>
-                    <input type="email" class="form-control" id="mail">
+                    <input type="email" class="form-control" name="email" id="email">
                     <label class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="name">
+                    <input type="text" class="form-control" name="name" id="name">
                     <label class="form-label">Apellido:</label>
-                    <input type="text" class="form-control" id="lastname">
+                    <input type="text" class="form-control" name="lastname" id="lastname">
                     <div class="mb-3" id="savedMessage"></div>
                     <div class="mb-3">
                         <label class="form-label">Mensaje:</label>
-                        <input type="text" class="form-control" id="message">
+                        <input type="text" class="form-control" name="message">
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
-                    <button type="submit" class="btn btn-primary"><a href="/productos" class="login">Volver a
-                            comprar</a></button>
                 </div>
             </form>
+            <button type="button" class="btn btn-primary"><a href="/productos" class="login">Volver a
+                    comprar</a></button>
         </div>
     </div>
     <script src="/js/chat.js"></script>

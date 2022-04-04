@@ -89,6 +89,19 @@ class ContainerFs {
         }
     }
 
+    async getByEmail(email) {
+        try {
+            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
+            const list = JSON.parse(content);
+            const elementList = list.filter(e => e.email === email);
+
+            return elementList;
+        }
+        catch (error) {
+            logger.error(`Error de container (getByCategory): ${error}`);
+        }
+    }
+
     async getNewId(element) {
         try {
             const content = await fs.promises.readFile(`${this.file}`, 'utf-8')

@@ -1,12 +1,17 @@
-const chatController = require('../controllers/chat');
+const PersistenceFactory = require('../daos/index');
+const {getPersistence} = require('../utils/getPersistence');
+
+const factory = PersistenceFactory.getInstance();
+
+const ChatDao = factory.getPersistenceMethod(getPersistence()).chatDao;
 
 const getMessages = async () => {
-    const messages = await chatController.getAll();
+    const messages = await ChatDao.getAll();
     return messages;
 };
 
 const saveMessages = async (message) => {
-    const savedMessages = await chatController.save(message);
+    const savedMessages = await ChatDao.save(message);
     return savedMessages;
 };
 

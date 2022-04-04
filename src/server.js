@@ -2,11 +2,13 @@ const express = require('express');
 const compression = require('compression');
 const sessionMongo = require('./services/session');
 const passport = require('./services/passport/passport');
+const cors = require('cors');
 
 const router = require('./routers/index');
 
 const server = express();
 
+server.use(cors());
 server.use(compression());
 
 server.use(express.json());
@@ -19,7 +21,6 @@ server.set('view engine', 'ejs');
 server.use(sessionMongo);
 
 server.use(passport.initialize());
-server.use(passport.session());
 
 server.use(router);
 

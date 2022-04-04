@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('../partials/head.ejs' ); %>
+    <title>Orden</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Terminar de comprar</h1>
+        <form action="/order" method="post">
+            <label>Ingrese el ID de su carrito aqui:</label>
+            <input type="text" name="cartId">
+            <button type="submit" class="btn btn-primary">Finalizar compra</button>
+        </form>
+    </div>
+    
+</body>
+</html>

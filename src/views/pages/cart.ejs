@@ -10,24 +10,23 @@
     <div class="container">
         <h1>Carrito</h1>
 
+        <p>Su carrito tiene el ID <%= cartId %>
+        </p>
+        <% if(cart.length===0){%>
+            <p>El carrito no tiene productos.</p>
+            <% } %>
+    </div>
+
+    <div class="container">
         <form action="/carrito" method="post">
-            <label>Id del producto:</label>
+            <label> Ingrese el ID de su carrito:</label>
+            <input type="text" name="cartId">
+            <label>Ingrese el ID del producto que quiere agregar:</label>
             <input type="text" name="prodId">
-            <label></label>
-            <div>
-                <button class="btn btn-primary" type="submit">Crear carrito</button>
-            </div>
+            <button class="btn btn-primary" type="submit">Agregar producto</button>
         </form>
 
-        <div>
-
-        </div>
-
-        <div>
-            <button class="btn btn-primary" id="btnFinish">Finalizar compra</button>
-        </div>
     </div>
-    <script src="/js/index.js"></script>
 </body>
 
 </html>

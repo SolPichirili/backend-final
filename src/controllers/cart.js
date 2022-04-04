@@ -7,18 +7,40 @@ const factory = PersistenceFactory.getInstance();
 const CartDaos = factory.getPersistenceMethod(getPersistence()).cartDao;
 const ProductDaos = factory.getPersistenceMethod(getPersistence()).productsDao;
 
-const getCart = async(req, res)=>{
-    await CartDaos.save();
-    res.render('../src/views/pages/cart.ejs');
+const createCart = async(req, res)=>{
+    const cart = req.body;
+    const cartId = await CartDaos.getNewId(cart);
+    const ownCart = await CartDaos.getById(cartId);
+    const {productos} = ownCart;
+
+    res.render('../src/views/pages/cart.ejs', {
+        cart: productos,
+        cartId: cartId
+    });
 }
 
-const createCart = async (req, res) => {
-    const productId = req.body;
-    const product = await ProductDaos.getById(productId.prodId);
-    const cart = await CartDaos.save(product);
-    res.render('../src/views/pages/cart.ejs', {
-        cart: cart
+const addProductById = async (req, res) => {
+    logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
+    const cartId = req.body.cartId;
+    const productId = req.body.prodId;
+    const product = await ProductDaos.getById(productId);
+    const cart = await CartDaos.addProductById(cartId, product);
+    const {productos} = cart;
+    res.render('../src/views/pages/cartShow.ejs', {
+        cartId: cartId,
+        cart: productos
     });
+}
+
+const getById = async (req, res) => {
+    const id = req.params.id;
+    const cart = await CartDaos.getById(id);
+    
+    if (!cart) {
+        res.send(`El carrito con ID ${id} no existe` );
+    }
+
+    res.send(`El carrito con ID ${id} esxiste.`);
 }
 
 const deleteById = async (req, res) => {
@@ -28,26 +50,7 @@ const deleteById = async (req, res) => {
     res.send({ data: cartDeletedId });
 }
 
-const getById = async (req, res) => {
-    logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
-    const id = req.params.id;
-    const cart = await CartDaos.getById(id);
-    if (!cart) {
-        res.send({ data: `El carrito con ID ${id} no existe` })
-    }
-    const { productos } = cart;
-    res.render('../src/views/pages/cart.ejs', {
-        products: productos
-    });
-}
 
-const addProductById = async (req, res) => {
-    logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
-    const id = req.params.id;
-    const products = req.body;
-    const cart = await CartDaos.addProductById(id, products);
-    res.send({ data: cart });
-}
 
 const deleteProductById = async (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
@@ -58,7 +61,6 @@ const deleteProductById = async (req, res) => {
 }
 
 module.exports = {
-    getCart,
     createCart,
     deleteById,
     getById,

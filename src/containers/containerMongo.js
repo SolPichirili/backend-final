@@ -4,7 +4,7 @@ const logger = require('../utils/winston');
 
 class ContainerMongo {
     constructor(model) {
-        this.model= model;
+        this.model = model;
         this.init();
     }
 
@@ -24,17 +24,17 @@ class ContainerMongo {
         }
     }
 
-    async findUser(email){
-        try{
-            const documents = await this.model.findOne({email});
+    async findUser(email) {
+        try {
+            const documents = await this.model.findOne({ email });
 
-            if (documents.length === 0){
+            if (documents.length === 0) {
                 return false
             }
 
             return documents;
         }
-        catch(error){
+        catch (error) {
             logger.error(`Error de container (findUser): ${error}`);
         }
     }
@@ -63,12 +63,22 @@ class ContainerMongo {
         }
     }
 
-    async getByCategory(category){
-        try{
-            const documents = await this.model.find({category});
+    async getByEmail(email) {
+        try {
+            const documents = await this.model.find({ email });
             return documents;
         }
-        catch(error){
+        catch (error) {
+            logger.error(`Error de container (getByCategory): ${error}`);
+        }
+    }
+
+    async getByCategory(category) {
+        try {
+            const documents = await this.model.find({ category });
+            return documents;
+        }
+        catch (error) {
             logger.error(`Error de container (getByCategory): ${error}`);
         }
     }
@@ -99,23 +109,25 @@ class ContainerMongo {
         }
     }
 
-    async addProductById(cartId, products) {
-        try{
+    async addProductById(cartId, product) {
+        try {
             const document = await this.getById(cartId);
 
-            if (!document){
-                return {error: 'El carrito no existe.'}
+            if (!document) {
+                return { error: 'El carrito no existe.' }
             }
-    
-            let elements = document.productos;
-    
-            products.map(e=> elements.push(e))
-    
-            await this.update(cartId, {productos: elements});
-    
-            return elements;
-        }
-        catch(error){
+
+            const elements = document.productos;
+
+            elements.push(product);
+
+            const response = await this.update(cartId, {
+                productos: elements
+            })
+
+            return response;
+
+        } catch (error) {
             logger.error(`Error de container (addProductById): ${error}`);
         }
 
@@ -140,14 +152,14 @@ class ContainerMongo {
             const document = await this.getById(cartId);
 
             if (!document) {
-                return ({error: 'El carrito no existe'});
+                return ({ error: 'El carrito no existe' });
             };
 
             const elements = document.productos;
             const element = elements.findIndex(e => e.id === productId);
             elements.splice(element, 1);
 
-            await this.update(cartId, {productos: elements});
+            await this.update(cartId, { productos: elements });
 
             return document;
 

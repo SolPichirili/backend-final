@@ -6,12 +6,6 @@ const factory = PersistenceFactory.getInstance();
 
 const ChatDao = factory.getPersistenceMethod(getPersistence()).chatDao;
 
-const getAll = async (req, res) =>{
-    logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
-    const messageList = await ChatDao.getAll();
-    res.send({ data: messageList });
-}
-
 const showChat = (req, res) =>{
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     res.render('../src/views/pages/chat.ejs');
@@ -19,21 +13,21 @@ const showChat = (req, res) =>{
 
 const getByEmail = async (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
-    const mail = req.params.mail;
-    const messagesByMail = await ChatDao.getById(mail);
-    res.send({data: messagesByMail})
+    const mail = req.params.email;
+    const messagesByMail = await ChatDao.getByEmail(mail);
+    res.render('../src/views/pages/messages.ejs', {
+        messages: messagesByMail
+    })
 }
 
 const save = async (req, res) =>{
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, MESSAGE: Proceso exitoso`);
     const newMessage = req.body;
-    const newList = await ChatDao.save(newMessage);
-    res.send({ data: newList });
+    await ChatDao.save(newMessage);
 }
 
 module.exports = {
     showChat,
-    getAll,
     getByEmail,
     save
 }

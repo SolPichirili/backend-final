@@ -80,6 +80,18 @@ class ContainerMem {
         }
     }
 
+    async getByEmail(email){
+        try{
+            const list = this.array;
+            const elementList = list.find(e=> e.email === email);
+
+            return elementList;
+        }
+        catch(error){
+            logger.error(`Error de container (getByCategory): ${error}`);
+        }
+    }
+
     async getNewId(element) {
         try {
             const list = this.array;

@@ -75,29 +75,23 @@ const loginStrategy = new LocalStrategy(
 );
 
 const jwtStrategy = new JwtStrategy(options,
-    async (token, done) => {
+    async (jwtPayload, done) => {
         try {
-            return done(null, token.user);
+            console.log(jwtPayload);
+            return done(null, jwtPayload);
         }
         catch (error) {
+            logger.error(`Error de JwtStrategy: ${error}`);
             return done(error);
         }
     }
 );
 
-const serializeUser = (user, cb) => {
-    cb(null, user);
-};
 
-const deserializeUser = (obj, cb) => {
-    cb(null, obj);
-}
 
 module.exports = {
     loginStrategy,
     registerStrategy,
-    jwtStrategy,
-    serializeUser,
-    deserializeUser
+    jwtStrategy
 }
 
