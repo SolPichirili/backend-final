@@ -1,14 +1,14 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     display: none;
 }
 
-h1{
+h1 {
     margin-top: 1rem;
 }
 
@@ -16,24 +16,24 @@ h2 {
     margin: 2rem 0;
 }
 
-.email{
+.email {
     color: blue;
     font-weight: bold;
     display: inline;
 }
 
-.fecha{
+.fecha {
     color: brown;
     display: inline;
 }
 
-.mensaje{
+.mensaje {
     color: green;
     font-style: italic;
     display: inline;
 }
 
-button{
+button {
     margin-bottom: 5%;
 }
 
@@ -43,16 +43,21 @@ button{
     text-align: center;
 }
 
-.login{
+.login {
     color: white;
     text-decoration: none;
 }
 
-.login:hover{
+.login:hover {
     color: white;
 }
 
-.products{
+.products {
     display: grid;
     grid-template-columns: repeat(2, 40fr);
+}
+
+.down{
+    display: block;
+    margin: 1rem 0;
 }

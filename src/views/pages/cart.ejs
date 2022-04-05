@@ -12,16 +12,16 @@
 
         <p>Su carrito tiene el ID <%= cartId %>
         </p>
-            <p>El carrito no tiene productos.</p>
+        <p>El carrito no tiene productos.</p>
     </div>
 
     <div class="container">
         <form action="/carrito" method="post">
-            <label> Ingrese el ID de su carrito:</label>
+            <label class="down"> Ingrese el ID de su carrito:</label>
             <input type="text" name="cartId">
-            <label>Ingrese el ID del producto que quiere agregar:</label>
+            <label class="down">Ingrese el ID del producto que quiere agregar:</label>
             <input type="text" name="prodId">
-            <button class="btn btn-primary" type="submit">Agregar producto</button>
+            <button class="btn btn-primary down" type="submit">Agregar producto</button>
         </form>
 
     </div>

@@ -1,18 +1,21 @@
 const path = require('path');
 
 require('dotenv').config({
-    path: './production.env'
+    path: path.resolve(process.cwd(), process.env.NODE_ENV + '.env')
 });
 
 const options = {
     port: process.env.PORT,
 
+    persistance: process.env.PERS,
+
+    admin: process.env.ADMIN,
+
     mongodb: {
         url: process.env.MONGO_URL,
         options: {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000
+            useUnifiedTopology: true
         }
     },
 
@@ -22,7 +25,15 @@ const options = {
         chatPath: __dirname + '/data/messages.json',
         usersPath: __dirname + '/data/users.json',
         ordersPath: __dirname + '/data/orders.json'
-    }
+    },
+
+    secretOrKey: process.env.SECRET_OR_KEY,
+
+    tokenExpiration: process.env.TOKEN_EXPIRATION,
+
+    nodemailerMail: process.env.NODEMAILER_MAIL,
+
+    nodemailerPassword: process.env.NODEMAILER_PASSWORD
 }
 
 

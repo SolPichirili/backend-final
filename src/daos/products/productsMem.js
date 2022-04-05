@@ -1,7 +1,7 @@
 const ContainerMem = require("../../containers/ContainerMem");
 
-class ProductsMemDaos extends ContainerMem{
-    constructor(){
+class ProductsMemDaos extends ContainerMem {
+    constructor() {
         super();
     }
 };

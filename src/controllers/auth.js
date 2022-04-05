@@ -1,6 +1,7 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const logger = require('../utils/winston');
+const options = require('../config');
 
 const getProfile = [
     passport.authenticate('jwt', {
@@ -28,30 +29,26 @@ const login = async (req, res, next) => {
             try {
 
                 if (err || !user) {
-                    logger.error(`Error de login: ${err}`);
-                    res.json({error: error});
-                    return next(err);
+                    const error = new Error('new Error')
+                    return next(error);
                 }
 
                 req.login(user,
                     { session: false },
-                    async (error) => {
-                        if (error) {
-                            logger.error(`Error de login: ${err}`);
-                            return next(error);
-                        }
+                    async (err) => {
 
+                        if (err) return next(err);
                         const body = { _id: user._id, email: user.email };
-                        const token = jwt.sign({ user: body }, process.env.SECRET_OR_KEY);
+                        const token = jwt.sign({ user: body }, options.secretOrKey, { expiresIn: options.tokenExpiration });
                     }
-                );
-                    return res.redirect('/productos');
+                )
+
+                res.redirect('/productos');
             }
             catch (error) {
-                logger.error(`Error de login: ${err}`);
                 return next(error);
             }
-        })(req, res, next);
+        })(req, res, next)
 }
 
 const getLogin = (req, res) => {

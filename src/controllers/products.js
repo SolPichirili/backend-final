@@ -36,8 +36,8 @@ const getByCategory = async (req, res) => {
         res.send(`No existe productos en la categoria ${category}.`);
     }
 
-    res.render('../src/views/pages/index.ejs',{ 
-        productos: productsByCategory 
+    res.render('../src/views/pages/index.ejs', {
+        productos: productsByCategory
     });
 }
 

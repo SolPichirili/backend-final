@@ -28,8 +28,8 @@ class ContainerMem {
         }
     }
 
-    async findUser(email){
-        try{
+    async findUser(email) {
+        try {
             const list = this.array;
             const elementList = list.find(e => e.email === email);
 
@@ -38,7 +38,7 @@ class ContainerMem {
             }
             return elementList;
         }
-        catch(error){
+        catch (error) {
             logger.error(`Error de container (findUser): ${error}`);
         }
     }
@@ -68,26 +68,26 @@ class ContainerMem {
         }
     }
 
-    async getByCategory(category){
-        try{
+    async getByCategory(category) {
+        try {
             const list = this.array;
-            const elementList = list.find(e=> e.category === category);
+            const elementList = list.find(e => e.category === category);
 
             return elementList;
         }
-        catch(error){
+        catch (error) {
             logger.error(`Error de container (getByCategory): ${error}`);
         }
     }
 
-    async getByEmail(email){
-        try{
+    async getByEmail(email) {
+        try {
             const list = this.array;
-            const elementList = list.find(e=> e.email === email);
+            const elementList = list.find(e => e.email === email);
 
             return elementList;
         }
-        catch(error){
+        catch (error) {
             logger.error(`Error de container (getByCategory): ${error}`);
         }
     }
@@ -139,22 +139,22 @@ class ContainerMem {
     }
 
     async addProductById(cartId, products) {
-        try{
+        try {
             const list = this.array;
             const element = list.find(e => e._id === cartId);
-    
+
             if (!element) {
-                return ({error: 'El carrito no existe'});
+                return ({ error: 'El carrito no existe' });
             };
-    
+
             if (!element.productos) {
                 element.productos = [];
             };
-    
+
             element.productos.push(products);
             return element;
         }
-        catch(error){
+        catch (error) {
             logger.error(`Error de contenedor (addProductById): ${error}`);
         }
     }

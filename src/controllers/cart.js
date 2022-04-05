@@ -7,7 +7,7 @@ const factory = PersistenceFactory.getInstance();
 const CartDaos = factory.getPersistenceMethod(getPersistence()).cartDao;
 const ProductDaos = factory.getPersistenceMethod(getPersistence()).productsDao;
 
-const createCart = async(req, res)=>{
+const createCart = async (req, res) => {
     const cart = req.body;
     const cartId = await CartDaos.getNewId(cart);
 
@@ -22,7 +22,7 @@ const addProductById = async (req, res) => {
     const productId = req.body.prodId;
     const product = await ProductDaos.getById(productId);
     const cart = await CartDaos.addProductById(cartId, product);
-    const {productos} = cart;
+    const { productos } = cart;
     res.render('../src/views/pages/cartShow.ejs', {
         cartId: cartId,
         cart: productos
@@ -32,9 +32,9 @@ const addProductById = async (req, res) => {
 const getById = async (req, res) => {
     const id = req.params.id;
     const cart = await CartDaos.getById(id);
-    
+
     if (!cart) {
-        res.send(`El carrito con ID ${id} no existe` );
+        res.send(`El carrito con ID ${id} no existe`);
     }
 
     res.send(`El carrito con ID ${id} esxiste.`);

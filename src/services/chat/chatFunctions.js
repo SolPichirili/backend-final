@@ -1,5 +1,5 @@
-const PersistenceFactory = require('../daos/index');
-const {getPersistence} = require('../utils/getPersistence');
+const PersistenceFactory = require('../../daos/index');
+const { getPersistence } = require('../../utils/getPersistence');
 
 const factory = PersistenceFactory.getInstance();
 

@@ -12,37 +12,37 @@
         <h2>Catalogo</h2>
     </div>
     <div class="container">
-            <div class="products row">
-                <% products.map((p)=>{ %>
-                    <div class="col">
-                        <div class="card">
-                            <img class="card-img-top img-fluid" alt="imagen-comida" src=<%=p.photo %>>
-                            <div class="card-body">
-                                <h5 class="card-title" id="prodName">
-                                    <%= p.name %>
-                                </h5>
-                                <p class="card-text">
-                                    <%= p.description %>
-                                </p>
-                                <p class="card-text" id="prodPrice">
-                                    $ <%= p.price %>
-                                </p>
+        <div class="products row">
+            <% products.map((p)=>{ %>
+                <div class="col">
+                    <div class="card">
+                        <img class="card-img-top img-fluid" alt="imagen-comida" src=<%=p.photo %>>
+                        <div class="card-body">
+                            <h5 class="card-title" id="prodName">
+                                <%= p.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= p.description %>
+                            </p>
+                            <p class="card-text" id="prodPrice">
+                                $ <%= p.price %>
+                            </p>
 
-                                <p class="card-text" id="prodPrice">
-                                    ID de compra: <%= p._id %>
-                                </p>
-                            </div>
+                            <p class="card-text" id="prodPrice">
+                                ID de compra: <%= p._id %>
+                            </p>
                         </div>
                     </div>
-                    <%}); %>
-            </div>
+                </div>
+                <%}); %>
+        </div>
     </div>
 
     <div class="container">
-            <button class="btn btn-primary"><a href="/carrito" class="login">Ir a comprar</a></button>
+        <button class="btn btn-primary"><a href="/carrito" class="login">Ir a comprar</a></button>
         <button class="btn btn-primary"><a href="/chat" class="login">Ir al chat</a></button>
     </div>
-    
+
 </body>
 
 </html>

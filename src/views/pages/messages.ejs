@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <%- include('../partials/head.ejs' ); %>
-    <title>Mensajes</title>
+        <title>Mensajes</title>
 </head>
+
 <body>
+    <h1>Mensajes</h1>
 
     <% if(messages.length===0){%>
         <p>No hay mensajes con este usuario.</p>
-        <% }else{ messages.map((m)=>{ %> 
+        <% }else{ messages.map((m)=>{ %>
             <p>
                 <%= m.message %>
             </p>
@@ -18,9 +21,10 @@
             <%})}; %>
 
 
-    <div class="container">
+                <div class="container">
 
-    </div>
-    
+                </div>
+
 </body>
+
 </html>

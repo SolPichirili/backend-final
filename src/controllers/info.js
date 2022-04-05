@@ -1,6 +1,6 @@
 const logger = require('../utils/winston');
 
-const getInfo = (req, res) =>{
+const getInfo = (req, res) => {
     logger.info(`PATH: ${req.path}, METHOD: ${req.method}, PROCESO EXITOSO`);
     const info = {
         ArgsDeEntrada: process.argv,

@@ -1,4 +1,6 @@
-const admin = true;
+const options = require('../config');
+
+const admin = options.admin;
 
 const isAdmin = (req, res, next) => {
     if (admin) {
