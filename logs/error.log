@@ -27,3 +27,4 @@
 {"level":"error","message":"Error de container (save): ValidationError: type: Path `type` is required., email: Path `email` is required."}
 {"level":"error","message":"Error de container (save): ValidationError: type: Path `type` is required., email: Path `email` is required."}
 {"level":"error","message":"Error de container (save): ValidationError: stock: Path `stock` is required."}
+{"level":"error","message":"Error de container (addProductById): ReferenceError: i is not defined"}

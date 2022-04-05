@@ -10,11 +10,8 @@ const ProductDaos = factory.getPersistenceMethod(getPersistence()).productsDao;
 const createCart = async(req, res)=>{
     const cart = req.body;
     const cartId = await CartDaos.getNewId(cart);
-    const ownCart = await CartDaos.getById(cartId);
-    const {productos} = ownCart;
 
     res.render('../src/views/pages/cart.ejs', {
-        cart: productos,
         cartId: cartId
     });
 }
