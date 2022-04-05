@@ -4,7 +4,7 @@ const options = require('../config');
 
 const sessionMongo = session({
     store: MongoStore.create({ mongoUrl: options.mongodb.url }),
-    secret: 'secret2',
+    secret: process.env.SECRET_MONGO,
     resave: true,
     saveUninitialized: false,
     rolling: true,
