@@ -8,6 +8,11 @@ const JWTStrategy = require('passport-jwt').Strategy;
 const options = require('../../config');
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
+const JWToptions = {
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: options.secretOrKey
+};
+
 passport.use('signup', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -68,10 +73,7 @@ passport.use('login', new LocalStrategy({
     }
 }));
 
-passport.use(new JWTStrategy({
-    secretOrKey: options.secretOrKey,
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
-}, async (token, done) => {
+passport.use(new JWTStrategy(JWToptions, async (token, done) => {
     try {
         return done(null, token.user);
     }
