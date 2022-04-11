@@ -11,6 +11,8 @@ const options = {
 
     admin: process.env.ADMIN,
 
+    mode: process.env.MODE_SERVER,
+
     mongodb: {
         url: process.env.MONGO_URL,
         options: {

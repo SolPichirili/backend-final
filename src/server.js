@@ -2,7 +2,6 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const compression = require('compression');
-const sessionMongo = require('./services/session');
 const passport = require('./services/auth/auth');
 const cors = require('cors');
 const router = require('./routers/index');
@@ -25,7 +24,6 @@ server.use(express.static(__dirname + '/public'));
 server.set('view engine', 'ejs');
 
 server.use(passport.initialize());
-server.use(sessionMongo);
 
 io.on('connection', async (socket) => {
     socketChat(io, socket);
