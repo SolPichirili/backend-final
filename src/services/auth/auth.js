@@ -1,3 +1,4 @@
+require('dotenv').config();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
@@ -5,12 +6,11 @@ const { getUser, createUser } = require('../../controllers/users');
 const sendMail = require('../../utils/nodemailer');
 const logger = require('../../utils/winston');
 const JWTStrategy = require('passport-jwt').Strategy;
-const options = require('../../config');
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
 const JWToptions = {
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: options.secretOrKey
+    secretOrKey: process.env.SECRET_OR_KEY,
 };
 
 passport.use('signup', new LocalStrategy({
