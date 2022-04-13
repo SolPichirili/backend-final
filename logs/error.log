@@ -1,0 +1,12 @@
+{"level":"error","message":"Error de container (addProductById): ReferenceError: isInCart is not defined"}
+{"level":"error","message":"Error de container (addProductById): ReferenceError: isInCart is not defined"}
+{"level":"error","message":"Error de container (addProductById): ReferenceError: isInCart is not defined"}
+{"level":"error","message":"Error de container (addProductById): TypeError: products is not iterable"}
+{"level":"error","message":"Error de container (addProductById): TypeError: products is not iterable"}
+{"level":"error","message":"Error de container (addProductById): TypeError: products is not iterable"}
+{"level":"error","message":"Error de container (addProductById): ReferenceError: Cannot access 'products' before initialization"}
+{"level":"error","message":"Error de container (addProductById): ReferenceError: Cannot access 'products' before initialization"}
+{"level":"error","message":"Error de container (getById): CastError: Cast to ObjectId failed for value \" 6256067e9b33d311cb9e2bde\" (type string) at path \"_id\" for model \"carritos\""}
+{"level":"error","message":"Error de container (addProductById): TypeError: products is not iterable"}
+{"level":"error","message":"Error de container (addProductById): TypeError: Cannot create property 'quantity' on number '1'"}
+{"level":"error","message":"Error de container (addProductById): TypeError: Cannot create property 'quantity' on number '1'"}

@@ -56,14 +56,7 @@ const getLogin = (req, res) => {
 }
 
 const logOut = (req, res) => {
-    req.session.destroy(err => {
-        if (!err) {
             res.render('../src/views/pages/logOut.ejs');
-        } else {
-            logger.error(`Error log out: ${err}`);
-            res.redirect('../src/views/pages/login.ejs');
-        }
-    });
 }
 
 const getRegister = (req, res) => {

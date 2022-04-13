@@ -117,14 +117,19 @@ class ContainerMongo {
                 return { error: 'El carrito no existe.' }
             }
 
-            const elements = document.productos;
+            const productsList = document.products;
+            const isInCart = productsList.find(p => p._id === product._id);
 
-            elements.push(product);
+            if (isInCart) {
+                isInCart.quantity++;
+            } else {
+                product.quantity = 1;
+                productsList.push(product);
+            }
 
             const response = await this.update(cartId, {
-                productos: elements
-            })
-
+                products: productsList
+            });
             return response;
 
         } catch (error) {

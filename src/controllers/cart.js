@@ -21,11 +21,17 @@ const addProductById = async (req, res) => {
     const cartId = req.body.cartId;
     const productId = req.body.prodId;
     const product = await ProductDaos.getById(productId);
+
+    if (!product){
+        res.send(`The product ${productId} has not been found.`);
+    }
+
     const cart = await CartDaos.addProductById(cartId, product);
-    const { productos } = cart;
+    const {products} = cart;
+    
     res.render('../src/views/pages/cartShow.ejs', {
         cartId: cartId,
-        cart: productos
+        cart: products
     });
 }
 

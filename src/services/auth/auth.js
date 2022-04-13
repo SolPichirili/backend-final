@@ -13,7 +13,7 @@ passport.use('signup', new LocalStrategy({
     passReqToCallback: true
 }, async (req, email, password, done) => {
     try {
-        const { name, address, age, tel } = req.body;
+        const { name, address, age, tel, repeatPassword } = req.body;
 
         const newUser = {
             email,
@@ -24,16 +24,18 @@ passport.use('signup', new LocalStrategy({
             tel
         }
 
-        const hash = await bcrypt.hash(password, 10);
-        newUser.password = hash;
+        if (password === repeatPassword) {
+            const hash = await bcrypt.hash(password, 10);
+            newUser.password = hash;
 
-        const user = await createUser(newUser);
+            const user = await createUser(newUser);
 
-        await sendMail(user);
+            await sendMail(user);
 
-        logger.info('Successfull registration');
+            logger.info('Successfull registration');
 
-        return done(null, user);
+            return done(null, user);
+        }
     }
     catch (error) {
         done(error);

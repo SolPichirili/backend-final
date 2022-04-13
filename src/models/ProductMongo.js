@@ -7,7 +7,8 @@ const ProductMongo = new Schema({
     photo: { type: String, required: true },
     price: { type: String, required: true },
     stock: { type: String, required: true },
-    category: { type: String, required: true }
+    category: { type: String, required: true },
+    quantity: {type: Number, default: 0}
 });
 
 module.exports = model('productos', ProductMongo);

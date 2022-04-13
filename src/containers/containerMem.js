@@ -138,21 +138,29 @@ class ContainerMem {
         }
     }
 
-    async addProductById(cartId, products) {
+    async addProductById(cartId, product) {
         try {
-            const list = this.array;
-            const element = list.find(e => e._id === cartId);
+            const cart = this.getById(cartId);
 
-            if (!element) {
+            if (!cart) {
                 return ({ error: 'El carrito no existe' });
             };
 
-            if (!element.productos) {
-                element.productos = [];
+            if (!cart.products) {
+                cart.products = [];
             };
 
-            element.productos.push(products);
-            return element;
+            const productsList = cart.products;
+            const isInCart = productsList.find(p => p._id === product._id);
+
+            if (isInCart) {
+                isInCart.quantity++;
+            } else {
+                product.quantity = 1;
+                productsList.push(product);
+            }
+
+            return productsList;
         }
         catch (error) {
             logger.error(`Error de contenedor (addProductById): ${error}`);

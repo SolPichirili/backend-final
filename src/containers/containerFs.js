@@ -156,28 +156,28 @@ class ContainerFs {
         }
     }
 
-    async addProductById(cartId, products) {
+    async addProductById(cartId, product) {
         try {
-            const content = await fs.promises.readFile(`${this.file}`, 'utf-8');
-            const list = JSON.parse(content);
-            const element = list.find(e => e._id === cartId);
+            const cart = await this.getById(cartId);
 
-            if (!element) {
-                return { error: 'No encontrado' }
+            if (!cart.products) {
+                cart.products = [];
             }
 
-            if (!element.productos) {
-                element.productos = [];
+            const productsList = cart.products;
+            const isInCart = productsList.find(p => p._id === product._id);
+
+            if (isInCart) {
+                isInCart.quantity++;
+            } else {
+                product.quantity = 1;
+                productsList.push(product);
             }
 
-            element.productos.push(products);
-
-            return await this.update(cartId, element);
-        }
-        catch (error) {
+            return productsList;
+        } catch (error) {
             logger.error(`Error de container (addProductById): ${error}`);
         }
-
     }
 
     async deleteById(id) {
