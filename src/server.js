@@ -1,17 +1,21 @@
 const express = require('express');
 const http = require('http');
-const { Server } = require('socket.io');
+const cors = require('cors');
 const compression = require('compression');
 const passport = require('./services/auth/auth');
-const cors = require('cors');
+const {Server} = require('socket.io');
+const {socketIo} = require('./services/chat/socketIo');
 const router = require('./routers/index');
-const { socketChat } = require('./services/chat/socket');
 
 const server = express();
 
 const httpServer = http.createServer(server);
 
-const io = new Server(httpServer);
+const io = new Server(httpServer, {
+    cors: {
+        origin: '*'
+    }
+});
 
 server.use(cors());
 server.use(compression());
@@ -25,8 +29,8 @@ server.set('view engine', 'ejs');
 
 server.use(passport.initialize());
 
-io.on('connection', async (socket) => {
-    socketChat(io, socket);
+io.on('connection', (socket)=>{
+    socketIo(io, socket);
 });
 
 server.use(router);
