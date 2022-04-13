@@ -11,11 +11,7 @@ const server = express();
 
 const httpServer = http.createServer(server);
 
-const io = new Server(httpServer, {
-    cors: {
-        origin: '*'
-    }
-});
+const io = new Server(httpServer);
 
 server.use(cors());
 server.use(compression());
